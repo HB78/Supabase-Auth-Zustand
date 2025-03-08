@@ -1,50 +1,31 @@
-# Welcome to your Expo app 👋
+# Expo Auth
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Description
 
-## Get started
+**Expo Auth** est un projet mobile développé avec Expo, qui m'a permis d'apprendre à mettre en place l'authentification avec **Supabase** et à utiliser **Zustand** pour la gestion d'état dans une application React Native. Le projet comprend l'authentification de l'utilisateur, la gestion de la session, et l'intégration de Supabase pour les fonctionnalités backend.
 
-1. Install dependencies
+## Fonctionnalités
 
-   ```bash
-   npm install
-   ```
+- Authentification avec Supabase (création de compte, connexion, déconnexion).
+- Gestion de l'état de l'utilisateur via **Zustand**.
+- Interface utilisateur moderne avec **TailwindCSS** et **Expo**.
+- Support de plusieurs plateformes : **Android**, **iOS** et **Web**.
 
-2. Start the app
+## Installation
 
-   ```bash
-    npx expo start
-   ```
+### Prérequis
 
-In the output, you'll find options to open the app in a
+- **Node.js** installé (recommandé version >= 18.x.x)
+- **Expo CLI** installé (si ce n'est pas déjà fait, vous pouvez l'installer avec `npm install -g expo-cli`)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Installation des dépendances
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Clonez ce projet et installez les dépendances avec npm ou yarn.
 
 ```bash
-npm run reset-project
+git clone <URL_DU_PROJET>
+cd expo_auth
+npm install
+# ou avec yarn
+yarn install
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

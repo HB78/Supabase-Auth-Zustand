@@ -1,0 +1,19 @@
+1 Installer Expo
+
+2 npm run reset-project pour redémarrer une arborescence des fichiers plus clean
+
+3 npx expo start pour démarrer le server
+
+4 pour tailwind
+ .npx expo install nativewind tailwindcss react-native-reanimated@3.16.2 react-native-safe-area-context
+ .npx tailwind init
+ .créer un fichier global.css dans app
+
+5 créer un fichier babel.config.js a la racine du projet
+6 creer un fichier metro config a la racine du projet il faudra peut etre installer metro si il y 1 bug npm install metro
+7 importer global.css dans le fichier layout
+8 créer un fichier nativewind-env.d.ts a la racine du project
+9 mettre a jour le import du gloabal css dans le fichier metro
+10 rajouter ça dans le fichier config de tailwind "./components/**/*.{js,jsx,ts,tsx}"
+
+11 si je n'arrive pas a me connecter avec expo go npx expo start --tunnel

@@ -1,0 +1,43 @@
+KeyboardAvoidingView
+KeyboardAvoidingView est un composant React Native qui ajuste automatiquement sa hauteur, sa position ou son padding en fonction de la hauteur du clavier virtuel. Il est essentiel dans les formulaires mobiles car il empêche le clavier de masquer les champs de saisie.
+Fonctionnalités principales :
+
+behavior : Détermine comment le composant s'adapte quand le clavier apparaît
+
+"padding" : Ajoute du padding en bas
+"position" : Déplace l'ensemble du contenu vers le haut
+"height" : Réduit la hauteur du composant
+
+
+keyboardVerticalOffset : Distance additionnelle entre le clavier et le composant
+
+Dans votre code, c'est configuré avec un comportement différent selon la plateforme :
+jsxCopybehavior={Platform.OS === "ios" ? "padding" : "height"}
+Ce qui est une pratique courante car iOS et Android gèrent différemment l'affichage du clavier.
+TouchableWithoutFeedback
+TouchableWithoutFeedback est un composant qui détecte les pressions tactiles mais n'affiche aucun retour visuel. Il est souvent utilisé comme wrapper pour capturer des événements tactiles sur une grande zone.
+Dans votre code, il est utilisé avec onPress={Keyboard.dismiss}, ce qui permet de fermer le clavier lorsque l'utilisateur touche n'importe quelle partie de l'écran en dehors des champs de saisie. C'est une technique courante pour améliorer l'expérience utilisateur en permettant de masquer facilement le clavier.
+jsxCopy<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+  {/* Contenu du formulaire */}
+</TouchableWithoutFeedback>
+BlurView
+BlurView est un composant d'Expo qui crée un effet de flou (blur) sur le contenu qui se trouve derrière lui. Contrairement aux composants natifs de React Native, il s'agit d'une fonctionnalité supplémentaire fournie par Expo.
+Caractéristiques principales :
+
+intensity : Contrôle l'intensité de l'effet de flou (valeur entre 0 et 100)
+tint : Couleur de teinte du flou (light/dark/default)
+
+Dans votre code, il est utilisé pour créer un effet de carte élégant avec un fond légèrement transparent et flou :
+jsxCopy<BlurView
+  intensity={80}
+  className="rounded-3xl p-9 bg-white/80 shadow-md"
+>
+  {/* Contenu du formulaire */}
+</BlurView>
+L'effet visuel obtenu est celui d'une carte semi-transparente avec un effet de verre dépoli (frosted glass), qui est un élément de design moderne et élégant souvent utilisé dans les interfaces iOS mais également adopté sur Android.
+La combinaison de ces trois composants crée une expérience utilisateur fluide où :
+
+Le formulaire ne sera pas masqué par le clavier
+L'utilisateur peut facilement fermer le clavier en touchant l'écran
+Le tout est présenté dans une interface visuellement attrayante avec un effet de verre dépoli
+Retry

@@ -1,39 +1,82 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+// app/_layout.tsx
+import { Stack, usePathname, useRouter } from "expo-router";
+import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
+import "react-native-url-polyfill/auto";
+import { useAuthStore } from "../stores/useAuthStore";
+import "./global.css";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Composant qui gère les redirections
+function AuthRedirect({ children }: { children: React.ReactNode }) {
+  const { session, isLoading, initialize, cleanup } = useAuthStore();
+  const pathname = usePathname();
+  const router = useRouter();
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
+  // Initialiser l'état d'authentification et nettoyer au démontage
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    initialize();
 
-  if (!loaded) {
-    return null;
+    // Nettoyer les écouteurs quand le composant est démonté
+    return () => {
+      cleanup();
+    };
+  }, []);
+
+  // Gérer les redirections basées sur l'état d'authentification
+  useEffect(() => {
+    if (isLoading) return;
+
+    // Routes qui nécessitent une authentification
+    const protectedRoutes = ["/home", "/(tab)/home", "/profile", "/settings"];
+
+    // Routes accessibles seulement si non authentifié
+    const publicOnlyRoutes = ["/", "/login", "/signup"];
+
+    // Vérifier si la route actuelle est protégée
+    const isProtectedRoute = protectedRoutes.some((route) =>
+      pathname.startsWith(route)
+    );
+
+    // Vérifier si la route actuelle est reservée aux utilisateurs non connectés
+    const isPublicOnlyRoute = publicOnlyRoutes.includes(pathname);
+
+    console.log("Pathname:", pathname);
+    console.log("Is protected:", isProtectedRoute);
+    console.log("Is public only:", isPublicOnlyRoute);
+
+    if (!session && isProtectedRoute) {
+      // Rediriger vers la page de connexion
+      router.replace("/");
+    } else if (session && isPublicOnlyRoute) {
+      // Rediriger vers la page d'accueil
+      router.replace("/home");
+    }
+  }, [session, pathname, isLoading]);
+
+  if (isLoading) {
+    // Afficher un écran de chargement
+    return (
+      <View className="flex-1 justify-center items-center bg-white">
+        <ActivityIndicator size="large" color="#0891b2" />
+      </View>
+    );
   }
 
+  return <>{children}</>;
+}
+
+// Composant racine
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+    <AuthRedirect>
+      <Stack
+        screenOptions={{
+          headerShown: false, // Masquer l'en-tête
+        }}
+      >
+        {/* Définir les routes et les pages du tab ici */}
+        <Stack.Screen name="home" />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </AuthRedirect>
   );
 }
